@@ -1,3 +1,5 @@
+#set GROQ_API_KEY = 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   (line for terminal in vscode)
+
 import os
 from langchain.chains import LLMChain
 from langchain_core.prompts import (
@@ -126,7 +128,6 @@ def main():
     response = conversation.predict(
         human_input="Generate my travel itinerary and packing list.")
     print("Chatbot:", response)
-
 
 if __name__ == "__main__":
     main()
