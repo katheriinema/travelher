@@ -1,34 +1,44 @@
-import React from "react";
-import Layout from "./Layout";
-import "../styles/Review.css";
+import React, { useState } from 'react';
+import './App.css';
 
-const Reviews = () => {
+function ReviewCard({ cityReview }) {
+  const { city, image, rating, reviews } = cityReview;
+  const [newReview, setNewReview] = useState('');
+
+  const handleReviewChange = (e) => {
+    setNewReview(e.target.value);
+  };
+
+  const handleAddReview = () => {
+    if (newReview.trim() !== '') {
+      alert(`New review for ${city}: ${newReview}`);
+      setNewReview('');
+    }
+  };
+
   return (
-    <Layout pageTitle="Reviews">
-      <div className="reviews-content">
-        <h2>Find and Share Reviews</h2>
-        <p>
-          Browse reviews from other women travelers and share your own
-          experiences.
-        </p>
+    <div className="place-item">
+      <img src={image} alt={city} className="city-image" />
+      <div className="place-details">
+        <h2>{city}</h2>
+        <div className="rating">
+          <span>{rating}</span> ★
+        </div>
         <ul className="reviews-list">
-          <li>
-            <strong>Paris:</strong> "Loved the Eiffel Tower! Safe and easy to
-            explore solo." - Jane
-          </li>
-          <li>
-            <strong>Tokyo:</strong> "Great public transport and helpful locals.
-            Highly recommend!" - Maria
-          </li>
-          <li>
-            <strong>New York:</strong> "Be mindful of busy areas, but plenty of
-            amazing sights to see." - Sophie
-          </li>
+          {reviews.map((review, index) => (
+            <li key={index}>{review}</li>
+          ))}
         </ul>
-        <button className="add-review-button">Add Your Review</button>
+        <textarea
+          className="review-input"
+          value={newReview}
+          onChange={handleReviewChange}
+          placeholder={`Write your review for ${city}...`}
+        ></textarea>
+        <button className="add-review-button" onClick={handleAddReview}>Add Review</button>
       </div>
-    </Layout>
+    </div>
   );
-};
+}
 
-export default Reviews;
+export default ReviewCard;
