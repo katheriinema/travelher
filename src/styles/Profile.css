@@ -1,19 +1,82 @@
-/* Profile Page Styling */
-.profile-content {
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    margin: 20px auto;
-    max-width: 80%;
-    text-align: center;
+/* Profile Container */
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Start content towards the top */
+  background-color: #FFEBF4; /* Soft pastel pink */
+  color: #DE5D83; /* Dark gray for text */
+  height: 100vh; /* Full height */
+  padding: 20px; /* Add padding to the container */
+  text-align: center;
+}
+
+/* Profile Image */
+.profile-container img {
+  width: 120px; /* Slightly larger */
+  height: 120px;
+  border-radius: 50%;
+  margin-top: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add a shadow for better aesthetics */
+  border: 4px solid #DE5D83; /* Add a soft border to match the theme */
+}
+
+/* Profile Header */
+.profile-container h1 {
+  font-family: "Righteous", serif;
+  font-size: 2rem; /* Larger font size for the header */
+  color: #DE5D83; /* Warm pastel pink */
+  margin: 20px 0 10px; /* Adjust margins for better spacing */
+}
+
+/* Profile Subheader */
+.profile-container h2 {
+  font-family: Arial, sans-serif; /* Use a simple font for subtext */
+  font-size: 1.2rem;
+  color: #E75480; /* Slightly darker pink for contrast */
+  margin-bottom: 20px;
+}
+
+/* Profile Bubble Container */
+.profile-bubble-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Add space between bubbles */
+  margin-top: 20px; /* Space above the bubbles */
+  width: 80%; /* Constrain width */
+  max-width: 600px; /* Limit maximum width for readability */
+}
+
+/* Individual Bubble */
+.profile-bubble {
+  background-color: #ffffff; /* White background for contrast */
+  color: #333; /* Dark gray for text */
+  border-radius: 15px; /* Rounded edges */
+  padding: 15px 20px; /* Add padding inside */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  text-align: left; /* Align text inside the bubble to the left */
+  font-size: 1rem;
+  font-family: Arial, sans-serif; /* Simple readable font */
+}
+
+/* Optional: Highlight Specific Info */
+.profile-bubble strong {
+  color: #DE5D83; /* Highlighted text color */
+}
+
+/* Add Responsive Design */
+@media (max-width: 768px) {
+  .profile-container img {
+    width: 100px;
+    height: 100px;
   }
-  
-  .profile-content h2 {
-    color: #f5a1b8; /* Pastel pink for titles */
+
+  .profile-container h1 {
+    font-size: 1.8rem;
   }
-  
-  .profile-content p {
-    color: #333333;
+
+  .profile-bubble {
+    font-size: 0.9rem;
+    padding: 10px 15px;
   }
-  
+}

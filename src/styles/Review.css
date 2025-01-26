@@ -1,42 +1,54 @@
-/* Reviews Page Styling */
 .reviews-content {
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    margin: 20px auto;
-    max-width: 85%;
-    text-align: left;
-  }
-  
-  .reviews-content h2 {
-    color: #f5a1b8; /* Pastel pink */
-  }
-  
-  .reviews-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .reviews-list li {
-    background-color: #FFEBF4;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin-bottom: 10px;
-  }
-  
-  .add-review-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #f5a1b8;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  .add-review-button:hover {
-    background-color: #E75480;
-  }
-  
+  padding: 20px;
+  background-color: #FFEBF4;
+  color: #333;
+}
+
+.reviews-list {
+  list-style: none;
+  padding: 0;
+}
+
+.place-item {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #E75480;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.place-item:hover {
+  background-color: #fde2e2;
+}
+
+.place-item.selected {
+  background-color: #f8d7da;
+}
+
+.reviews-section {
+  margin-top: 20px;
+}
+
+.review-input {
+  width: 100%;
+  height: 80px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.add-review-button {
+  padding: 10px 15px;
+  color: white;
+  background-color: #E75480;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.add-review-button:hover {
+  background-color: #DE5D83;
+}

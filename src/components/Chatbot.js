@@ -1,39 +1,40 @@
 import React, { useState } from "react";
 import Layout from "./Layout";
 import "../styles/Chatbot.css";
+import axios from "axios";
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([
-    { sender: "bot", text: "Welcome to TravelHer! What's your name?" },
+    { sender: "bot", text: "Hello! I can help you plan your trip. Where do you want to go?" },
   ]);
   const [userInput, setUserInput] = useState("");
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (!userInput.trim()) return;
 
     const newMessages = [...messages, { sender: "user", text: userInput }];
-    const botResponse = getBotResponse(userInput);
 
-    if (botResponse) {
-      newMessages.push({ sender: "bot", text: botResponse });
+    try {
+      // Example: Send the last user input to the backend
+      const response = await axios.post("http://localhost:5000/generate-itinerary", {
+        destination: "Paris", // Hardcoded for now; replace with user input later
+        duration: "7 days",
+        season: "Summer",
+        activities: ["Sightseeing", "Food and Drink"],
+      });
+
+      newMessages.push({ sender: "bot", text: response.data.response });
+    } catch (error) {
+      newMessages.push({ sender: "bot", text: "Sorry, something went wrong. Please try again!" });
+      console.error(error);
     }
 
     setMessages(newMessages);
-    setUserInput(""); // Clear input field
-  };
-
-  const getBotResponse = (input) => {
-    if (input.toLowerCase().includes("hi") || input.toLowerCase().includes("hello")) {
-      return "Hello! It's great to meet you. Where are you planning to travel?";
-    }
-    if (input.toLowerCase().includes("paris")) {
-      return "Paris is a wonderful choice! Do you prefer sightseeing or relaxing activities?";
-    }
-    return "I'm here to help! Tell me more about your travel preferences.";
+    setUserInput(""); // Clear input
   };
 
   return (
-    <Layout pageTitle="Your Personal Travel Assistant">
+    <Layout pageTitle="Chatbot">
       <div className="chat-window">
         <div className="chat-messages">
           {messages.map((message, index) => (
