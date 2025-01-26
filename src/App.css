@@ -1,0 +1,54 @@
+/* General Styling */
+.App {
+  text-align: center;
+  background-color: #ff8ed5; /* Full-page background color */
+  min-height: 100vh; /* Ensure the background spans the full viewport height */
+  margin: 0;
+}
+
+.App-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  color: white;
+}
+
+.logo-container {
+  perspective: 1000px; /* Enables 3D perspective */
+  display: flex;
+  justify-content: center; /* Centers the logo horizontally */
+  align-items: center; /* Centers the logo vertically */
+  margin: 0; /* Removes any extra margin */
+  padding: 0; /* Removes any extra padding */
+}
+
+.App-logo-3d {
+  width: 150px;
+  height: 150px;
+}
+
+/* Button Styling */
+.start-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  background-color: #ff4081; /* Vibrant pink */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.start-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(255, 64, 129, 0.4);
+}
+
+.start-button:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 5px rgba(255, 64, 129, 0.6);
+}
