@@ -7,7 +7,8 @@ import { Link } from "react-router-dom";
 <nav>
   <Link to="/chatbot">Chatbot</Link>
   <Link to="/itinerary">Itinerary</Link>
-</nav>
+  <Link to="/current-location">Your Current Location</Link>
+</nav>;
 
 const Layout = ({ children, pageTitle }) => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const Layout = ({ children, pageTitle }) => {
           <img src="/assets/pfp.png" alt="Profile" />
         </div>
         <h1 style={{ color: "#f5a1b8" }}>{pageTitle}</h1> {/* Ensures consistent dusty pink */}
-        </div>
+      </div>
 
       {/* Main Content */}
       <div className="main-content">{children}</div>

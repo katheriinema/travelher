@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
 import ReviewCard from "./ReviewCard";
 import "../styles/Review.css";
 
 const Reviews = () => {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const [currentCity, setCurrentCity] = useState("Determining location...");
 
   const reviewCards = [
     {
@@ -39,8 +40,42 @@ const Reviews = () => {
     );
   };
 
+  useEffect(() => {
+    // Fetch the user's current location
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+
+          try {
+            // Use OpenCageData or another reverse geocoding service
+            const response = await fetch(
+              `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+            );
+            const data = await response.json();
+            const city = data.address.city || data.address.town || data.address.village || "Unknown location";
+            setCurrentCity(city);
+          } catch (error) {
+            console.error("Error fetching location:", error);
+            setCurrentCity("Unable to determine location");
+          }
+        },
+        () => {
+          setCurrentCity("Location permissions denied");
+        }
+      );
+    } else {
+      setCurrentCity("Geolocation not supported by this browser");
+    }
+  }, []);
+
   return (
     <Layout pageTitle="Reviews">
+      {/* Current location pin */}
+      <div className="current-location">
+        <p>Your Current Location: {currentCity}</p>
+      </div>
+
       <div className="reviews-content">
         <h2>Find and Share Reviews</h2>
         <p>

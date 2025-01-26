@@ -125,3 +125,17 @@
 .nav-button:active {
   transform: scale(0.95);
 }
+
+.current-location {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  font-family: "Righteous", sans-serif;
+  z-index: 10;
+  color: #e75480;
+}
