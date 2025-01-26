@@ -1,25 +1,20 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import SpinningSphere from "./SpinningSphere";
-import "../App.css";
+import "../styles/Homepage.css";
 
 const HomePage = () => {
   const navigate = useNavigate();
 
-  const handleStartClick = () => {
-    navigate("/onboarding");
-  };
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <SpinningSphere />
-        <h1>Welcome to TravelHer</h1>
-        <p>Empowering solo women travelers worldwide!</p>
-        <button className="start-button" onClick={handleStartClick}>
-          Start Your Travels Now
-        </button>
-      </header>
+    <div className="homepage-container">
+      {/* Add SpinningSphere at the top */}
+      <SpinningSphere />
+      <h1 className="homepage-header">Welcome to TravelHer</h1>
+      <p className="welcome-message">Empowering solo women travelers worldwide!</p>
+      <button className="start-button" onClick={() => navigate("/chatbot")}>
+        Start Your Travels Now
+      </button>
     </div>
   );
 };

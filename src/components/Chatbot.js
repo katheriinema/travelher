@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // For navigation between tabs
-import "../App.css";
-const pfp = "/assets/pfp.png";
+import Layout from "./Layout";
+import "../styles/Chatbot.css";
 
-const Onboarding = () => {
+const Chatbot = () => {
   const [messages, setMessages] = useState([
     { sender: "bot", text: "Welcome to TravelHer! What's your name?" },
   ]);
   const [userInput, setUserInput] = useState("");
-
-  const navigate = useNavigate(); // To switch between routes (tabs)
 
   const handleSendMessage = () => {
     if (!userInput.trim()) return;
@@ -36,16 +33,7 @@ const Onboarding = () => {
   };
 
   return (
-    <div className="onboarding-container">
-      {/* Header */}
-      <header className="header">
-        <div className="profile-icon" onClick={() => navigate("/profile")}>
-          <img src={pfp} alt="User Profile" />
-        </div>
-        <h1>Your Personal Travel Assistant</h1>
-      </header>
-
-      {/* Chat Window */}
+    <Layout pageTitle="Your Personal Travel Assistant">
       <div className="chat-window">
         <div className="chat-messages">
           {messages.map((message, index) => (
@@ -68,21 +56,8 @@ const Onboarding = () => {
           <button onClick={handleSendMessage}>Send</button>
         </div>
       </div>
-
-      {/* Bottom Tab Navigation */}
-      <div className="bottom-tabs">
-        <button onClick={() => navigate("/onboarding")} className="tab">
-          Onboarding
-        </button>
-        <button onClick={() => navigate("/reviews")} className="tab">
-          Reviews
-        </button>
-        <button onClick={() => navigate("/profile")} className="tab">
-          Profile
-        </button>
-      </div>
-    </div>
+    </Layout>
   );
 };
 
-export default Onboarding;
+export default Chatbot;

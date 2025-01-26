@@ -1,0 +1,50 @@
+/* Reset for Homepage */
+.homepage-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers content horizontally */
+    justify-content: center; /* Centers content vertically */
+    height: 100vh; /* Full viewport height */
+    background-color: #FFEBF4; /* Soft pastel pink background */
+    text-align: center; /* Aligns text within the container */
+    margin: 0 auto;
+  }
+  
+  .homepage-container h1 {
+    font-family: "Righteous", serif;
+    font-size: 2.5rem;
+    color: #DE5D83; /* Darker pastel pink */
+    margin-bottom: 20px;
+  }
+  
+  .homepage-container p {
+    font-family: "Righteous", serif;
+    font-size: 1.2rem;
+    color: #E75480;
+    margin-bottom: 30px;
+  }
+  
+  .homepage-container .start-button {
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    background-color: #E75480;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s, box-shadow 0.2s;
+    margin-top: 20px;
+  }
+  
+  .homepage-container .start-button:hover {
+    transform: scale(1.05);
+    background-color: #DE5D83;
+    box-shadow: 0 4px 10px rgba(255, 64, 129, 0.4);
+  }
+  
+  .homepage-container .start-button:active {
+    transform: scale(0.98);
+    background-color: #fc8eac;
+  }
+  

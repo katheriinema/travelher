@@ -1,0 +1,19 @@
+/* Profile Page Styling */
+.profile-content {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 80%;
+    text-align: center;
+  }
+  
+  .profile-content h2 {
+    color: #f5a1b8; /* Pastel pink for titles */
+  }
+  
+  .profile-content p {
+    color: #333333;
+  }
+  

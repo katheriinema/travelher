@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import Layout from "./Layout";
 import axios from "axios";
+import "../styles/Itinerary.css";
 
 const Itinerary = ({ userId }) => {
   const [itinerary, setItinerary] = useState(null);
@@ -22,34 +24,30 @@ const Itinerary = ({ userId }) => {
   }, [userId]);
 
   return (
-    <div>
-      {error ? (
-        <p>{error}</p>
-      ) : itinerary ? (
-        <div>
-          <h2>Itinerary for {itinerary.destination}</h2>
-          <p>Duration: {itinerary.duration} days</p>
-          <h3>Activities:</h3>
-          <ul>
-            {itinerary.activities && itinerary.activities.length > 0 ? (
-              itinerary.activities.map((activity, index) => (
+    <Layout pageTitle="Your Itinerary">
+      <div className="itinerary-content">
+        {error ? (
+          <p className="error-message">{error}</p>
+        ) : itinerary ? (
+          <div className="itinerary-details">
+            <h2>Destination: {itinerary.destination}</h2>
+            <p>Duration: {itinerary.duration} days</p>
+            <h3>Activities:</h3>
+            <ul>
+              {itinerary.activities.map((activity, index) => (
                 <li key={index}>{activity}</li>
-              ))
-            ) : (
-              <p>No activities planned yet.</p>
-            )}
-          </ul>
-          <h3>Schedule:</h3>
-          {itinerary.schedule ? (
-            <pre>{JSON.stringify(itinerary.schedule, null, 2)}</pre>
-          ) : (
-            <p>Schedule is not available yet.</p>
-          )}
-        </div>
-      ) : (
-        <p>Loading itinerary...</p>
-      )}
-    </div>
+              ))}
+            </ul>
+            <h3>Schedule:</h3>
+            <pre className="schedule">
+              {JSON.stringify(itinerary.schedule, null, 2)}
+            </pre>
+          </div>
+        ) : (
+          <p>Loading itinerary...</p>
+        )}
+      </div>
+    </Layout>
   );
 };
 

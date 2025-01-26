@@ -1,0 +1,91 @@
+/* Chatbot-Specific Styling */
+.chat-window {
+  position: relative;
+  top: -10px; /* Adjust position */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #FFFFFF;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  padding: 15px;
+  max-width: 80%;
+  min-height: 550px;
+  overflow: hidden;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.chat-message {
+  padding: 8px 12px;
+  border-radius: 8px;
+  max-width: 60%;
+  word-wrap: break-word;
+}
+
+.chat-message.bot {
+  background-color: #F4F4F9;
+  color: #333333;
+  align-self: flex-start;
+}
+
+.chat-message.user {
+  background-color: #f5a1b8;
+  color: white;
+  align-self: flex-end;
+}
+
+/* Chat Input Section */
+.chat-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 12px 20px; /* Add padding for a more spacious feel */
+  border: 1px solid #DE5D83; /* Border color matching the theme */
+  border-radius: 25px; /* Fully rounded input */
+  font-size: 1rem; /* Adjust font size for better readability */
+  color: #333333;
+  background-color: #FDFDFD; /* Subtle white background */
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05); /* Light inner shadow */
+  outline: none; /* Remove default focus outline */
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.chat-input input:focus {
+  border-color: #E75480; /* Highlight border on focus */
+  box-shadow: 0 0 5px rgba(231, 84, 128, 0.5); /* Pink glow on focus */
+}
+
+.chat-input button {
+  padding: 12px 20px;
+  background-color: #f5a1b8; /* Button color matching the theme */
+  color: white;
+  border: none;
+  border-radius: 25px; /* Fully rounded button */
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.chat-input button:hover {
+  background-color: #E75480; /* Slightly deeper pink */
+  transform: scale(1.05); /* Enlarge button slightly */
+}
+
+.chat-input button:active {
+  transform: scale(0.95); /* Shrink slightly on click */
+}

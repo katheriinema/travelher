@@ -9,7 +9,7 @@ const SpinningSphere = () => {
 
     // Scene, Camera, Renderer
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color("#ff8ed5"); // Match the pink background
+    scene.background = new THREE.Color("#FFEBF4"); // Set to match the lighter pink
 
     const camera = new THREE.PerspectiveCamera(
       75,
