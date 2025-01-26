@@ -1,5 +1,4 @@
 /* General Reset */
-/* General Styling */
 body, html {
   margin: 0;
   padding: 0;
@@ -24,7 +23,7 @@ body, html {
   padding: 10px 20px;
   font-size: 1.5rem;
   font-weight: bold;
-  color: #f5a1b8; /* Warm pastel pink */
+  color: #f5a1b8; /* Dusty pink for headers */
 }
 
 /* Profile Icon */
@@ -33,7 +32,7 @@ body, html {
   left: 20px;
   top: 50%;
   transform: translateY(-50%);
-  width: 100px; /* Set appropriate size */
+  width: 100px;
   height: 100px;
   cursor: pointer;
 }
@@ -53,8 +52,8 @@ body, html {
   box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   position: fixed;
-  bottom: 0; /* Ensure it sticks to the bottom */
-  width: 100%; /* Span across the entire viewport */
+  bottom: 0;
+  width: 100%;
 }
 
 .tab {
@@ -79,6 +78,38 @@ body, html {
 }
 
 .active-tab {
-  background-color: #E75480; /* Highlight the active tab */
+  background-color: #E75480;
   color: white;
+}
+
+/* General Text Styling */
+h1, h2, h3, h4, h5, h6 {
+  color: #f5a1b8 !important; /* Dusty pink for headers */
+}
+
+p, span, li, .chat-message, .no-itinerary {
+  color: #000000 !important; /* Black text for non-header elements */
+}
+
+/* Chatbox Messages */
+.chat-message {
+  background: #ffffff;
+  padding: 10px 15px;
+  border-radius: 10px;
+  margin: 5px 0;
+  max-width: 80%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  word-wrap: break-word;
+}
+
+.chat-message.user {
+  align-self: flex-end;
+  background-color: #f5a1b8;
+  color: white;
+}
+
+.chat-message.bot {
+  align-self: flex-start;
+  background-color: #ffffff;
+  color: black;
 }

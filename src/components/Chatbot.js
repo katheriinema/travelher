@@ -2,39 +2,48 @@ import React, { useState } from "react";
 import Layout from "./Layout";
 import "../styles/Chatbot.css";
 import axios from "axios";
+import ReactMarkdown from "react-markdown";
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([
     { sender: "bot", text: "Hello! I can help you plan your trip. Where do you want to go?" },
   ]);
   const [userInput, setUserInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const userId = "unique_user_id"; // Replace with actual session/user ID logic
 
   const handleSendMessage = async () => {
     if (!userInput.trim()) return;
-
+  
     const newMessages = [...messages, { sender: "user", text: userInput }];
-
-    try {
-      // Example: Send the last user input to the backend
-      const response = await axios.post("http://localhost:5000/generate-itinerary", {
-        destination: "Paris", // Hardcoded for now; replace with user input later
-        duration: "7 days",
-        season: "Summer",
-        activities: ["Sightseeing", "Food and Drink"],
-      });
-
-      newMessages.push({ sender: "bot", text: response.data.response });
-    } catch (error) {
-      newMessages.push({ sender: "bot", text: "Sorry, something went wrong. Please try again!" });
-      console.error(error);
-    }
-
     setMessages(newMessages);
-    setUserInput(""); // Clear input
+    setLoading(true);
+  
+    try {
+      const response = await axios.post("http://localhost:5000/chat", {
+        user_id: userId,
+        user_input: userInput,
+      });
+  
+      const botResponse = response.data.response || "Sorry, something went wrong.";
+      
+      // Save Markdown-formatted itinerary to localStorage
+      if (response.data.response) {
+        localStorage.setItem("markdownItinerary", botResponse); // Save formatted response
+      }
+  
+      setMessages([...newMessages, { sender: "bot", text: botResponse }]);
+    } catch (error) {
+      setMessages([...newMessages, { sender: "bot", text: "Sorry, something went wrong. Please try again!" }]);
+      console.error(error);
+    } finally {
+      setLoading(false);
+      setUserInput("");
+    }
   };
-
+    
   return (
-    <Layout pageTitle="Chatbot">
+    <Layout pageTitle="Your Personal Travel Guide">
       <div className="chat-window">
         <div className="chat-messages">
           {messages.map((message, index) => (
@@ -42,9 +51,14 @@ const Chatbot = () => {
               key={index}
               className={`chat-message ${message.sender === "bot" ? "bot" : "user"}`}
             >
-              {message.text}
+              {message.sender === "bot" ? (
+                <ReactMarkdown>{message.text}</ReactMarkdown>
+              ) : (
+                message.text
+              )}
             </div>
           ))}
+          {loading && <div className="chat-message bot">Typing...</div>}
         </div>
         <div className="chat-input">
           <input
@@ -54,7 +68,9 @@ const Chatbot = () => {
             onChange={(e) => setUserInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
           />
-          <button onClick={handleSendMessage}>Send</button>
+          <button onClick={handleSendMessage} disabled={loading}>
+            Send
+          </button>
         </div>
       </div>
     </Layout>

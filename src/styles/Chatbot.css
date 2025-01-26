@@ -6,8 +6,10 @@
   border-radius: 15px;
   padding: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  height: 70vh;
+  max-height: 500px;
+  max-width: 1000px;
   margin: 20px auto;
+  margin-bottom: 40px;
 }
 
 .chat-messages {
@@ -31,7 +33,7 @@
 .chat-message.user {
   background-color: #f5a1b8;
   color: #fff;
-  align-self: flex-end;
+  align-selft: flex-end;
 }
 
 .chat-input {

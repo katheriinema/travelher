@@ -1,6 +1,7 @@
-#set GROQ_API_KEY = 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   (line for terminal in vscode)
-
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 import os
+from datetime import datetime, timedelta
 from langchain.chains import LLMChain
 from langchain_core.prompts import (
     ChatPromptTemplate,
@@ -11,42 +12,30 @@ from langchain_core.messages import SystemMessage
 from langchain.chains.conversation.memory import ConversationBufferWindowMemory
 from langchain_groq import ChatGroq
 
+from dotenv import load_dotenv
+load_dotenv()
 
-def main():
-    """
-    This function is the main entry point of the application. It sets up the Groq client, the Streamlit interface, and handles the chat interaction.
-    """
+app = Flask(__name__)
+CORS(app)
 
-    # Get Groq API key
-    groq_api_key = os.environ['GROQ_API_KEY']
-    model = 'llama3-8b-8192'
-    # Initialize Groq Langchain chat object and conversation
-    groq_chat = ChatGroq(groq_api_key=groq_api_key, model_name=model)
+# Initialize LangChain with Groq
+groq_api_key = os.getenv("GROQ_API_KEY", "your-api-key")  # Replace or set as environment variable
+model = 'llama3-8b-8192'
+groq_chat = ChatGroq(groq_api_key=groq_api_key, model_name=model)
 
-    print(
-        "Hello! I'm your friendly TravelHer chatbot. I can help you travel the world safely! Based on your previous responses, I will curate a travel itinerary and packing list! Just let me know if you like or dislike any of the suggestions. I'm here to help you make the most of your travels!"
-    )
+# Memory object to store conversation context
+memory = ConversationBufferWindowMemory(k=5, memory_key="chat_history", return_messages=True)
 
-    # Collect user inputs for the trip
-    print("Where do you want to go? (e.g., Paris, Tokyo, etc.)")
-    destination = input("Enter your destination: ")
+# To track the current state of the conversation
+user_sessions = {}
 
-    print(
-        "How long is your trip? (Please enter the number of days, e.g., 7 days)"
-    )
-    duration = input("Enter trip duration: ")
+@app.route('/chat', methods=['POST'])
+def chat():
+    data = request.json
+    user_id = data.get("user_id")  # Each user should have a unique ID (e.g., session ID)
+    user_input = data.get("user_input", "").strip()
 
-    # Ask about the time of the year
-    print(
-        "What time of the year will you be traveling? (e.g., Spring, Summer, Fall, Winter)"
-    )
-    season = input(
-        "Enter season or month of travel (e.g., Summer, December): ")
-
-    # Get preferred activities from the user
-    print(
-        "Please select your preferred activities for this trip (separate by commas if more than one):"
-    )
+    # List of activities for users to choose from
     activities = [
         "Sightseeing: Visiting landmarks, historical sites, museums, and cultural attractions.",
         "Outdoor Adventures: Hiking, biking, skiing, surfing, and other outdoor sports.",
@@ -60,74 +49,128 @@ def main():
         "Learning: Taking cooking classes, language lessons, or guided tours to learn about the destination’s history and culture."
     ]
 
-    print("Available activities:")
-    for i, activity in enumerate(activities, 1):
-        print(f"{i}. {activity}")
+    # If the user session doesn't exist, initialize it
+    if user_id not in user_sessions:
+        user_sessions[user_id] = {
+            "destination": None,
+            "start_date": None,
+            "end_date": None,
+            "activities": [],
+            "step": 0  # Step of the conversation (0: ask destination, 1: date range, etc.)
+        }
 
-    activity_indices = input(
-        "Select activities by entering numbers separated by commas (e.g., 1, 3, 5): "
-    )
-    selected_activities = [
-        activities[int(i) - 1] for i in activity_indices.split(",")
-    ]
+    session = user_sessions[user_id]
 
-    # Prepare the user profile with the information they provided
-    user_profile = {
-        "destination": destination,
-        "duration": duration,
-        "season": season,
-        "activities": selected_activities
-    }
+    # Step 1: Ask for destination
+    if session["step"] == 0:
+        if user_input:
+            session["destination"] = user_input
+            session["step"] += 1
+            return jsonify({"response": "What are the start and end dates for your trip? (e.g., 2025-02-01 to 2025-02-07)"})
+        else:
+            return jsonify({"response": "Hello! I can help you plan your trip. Where do you want to go?"})
 
-    print(
-        f"Great! Let's start planning your trip to {destination} for {duration}. You have chosen the following activities: {', '.join(selected_activities)}."
-    )
-    print(
-        "Now let's proceed with your personalized itinerary and packing list..."
-    )
+    # Step 2: Ask for date range
+    if session["step"] == 1:
+        if user_input and "to" in user_input:
+            try:
+                start_date, end_date = map(str.strip, user_input.split("to"))
+                session["start_date"] = start_date
+                session["end_date"] = end_date
+                session["step"] += 1
 
-    # Create a system prompt for the chatbot based on user input
-    system_prompt = f"""
-    You are a friendly travel guide assisting a solo female traveler.
-    The user is traveling to {destination} for {duration} days.
-    The user has selected the following activities: {', '.join(selected_activities)}.
-    The user will be traveling during {season}.
-    Based on this information, help the user by suggesting a travel itinerary and a packing list that is appropriate for the weather during this time of year.
+                # Display activities
+                activities_list = "\n".join([f"{i}. {activity}" for i, activity in enumerate(activities, 1)])
+                return jsonify({"response": f"Here are some activities you can choose from:\n{activities_list}\nSelect activities by entering numbers separated by commas (e.g., 1, 3, 5)."})
+            except ValueError:
+                return jsonify({"response": "Please provide the start and end dates in the correct format (e.g., 2025-02-01 to 2025-02-07)."})
+        else:
+            return jsonify({"response": "What are the start and end dates for your trip? (e.g., 2025-02-01 to 2025-02-07)"})
+
+    # Step 3: Ask for activities
+    if session["step"] == 2:
+        if user_input:
+            try:
+                # Parse the user input into selected activity indices
+                selected_indices = [int(i.strip()) for i in user_input.split(",") if i.strip().isdigit()]
+                
+                # Log the parsed indices for debugging
+                print(f"Parsed indices: {selected_indices}")
+
+                # Map the indices to the corresponding activities
+                session["activities"] = [activities[i - 1] for i in selected_indices if 1 <= i <= len(activities)]
+                
+                # Log the selected activities for debugging
+                print(f"Selected activities: {session['activities']}")
+
+                session["step"] += 1
+
+                # Generate the final itinerary
+                system_prompt = f"""
+                You are a friendly travel guide assisting a solo female traveler.
+                The user is traveling to {session['destination']} from {session['start_date']} to {session['end_date']}.
+                The user has selected the following activities: {', '.join(session['activities'])}.
+                Based on this information, help the user by suggesting a detailed travel itinerary with timestamps and a packing list.
+                """
+
+                # Create the prompt
+                prompt = ChatPromptTemplate.from_messages([
+                    SystemMessage(content=system_prompt),
+                    MessagesPlaceholder(variable_name="chat_history"),
+                    HumanMessagePromptTemplate.from_template("{human_input}"),
+                ])
+
+                # Generate response
+                conversation = LLMChain(
+                    llm=groq_chat,
+                    prompt=prompt,
+                    verbose=False,
+                    memory=memory,
+                )
+
+                try:
+                    raw_response = conversation.predict(human_input="Generate my detailed travel itinerary with timestamps and dates.")
+                    formatted_response = format_itinerary(raw_response)
+                    user_sessions.pop(user_id, None)  # Reset session after completion
+                    return jsonify({"response": formatted_response})
+                except Exception as e:
+                    print(f"Error generating itinerary: {e}")  # Log the error
+                    return jsonify({"error": "Something went wrong while generating your itinerary."}), 500
+            except Exception as e:
+                print(f"Error parsing activities: {e}")  # Log the error
+                return jsonify({"response": "Invalid selection. Please choose activities by entering numbers separated by commas (e.g., 1, 3, 5)."})
+        else:
+            activities_list = "\n".join([f"{i}. {activity}" for i, activity in enumerate(activities, 1)])
+            return jsonify({"response": f"Here are some activities you can choose from:\n{activities_list}\nSelect activities by entering numbers separated by commas (e.g., 1, 3, 5)."})
+
+    return jsonify({"response": "Thank you for using the chatbot!"})
+
+
+def format_itinerary(raw_response):
     """
+    Format the raw chatbot response into Markdown for better readability.
+    """
+    if not raw_response or not isinstance(raw_response, str):
+        return "No itinerary available. Please try again."
 
-    conversational_memory_length = 5  # Number of previous messages the chatbot will remember
-    memory = ConversationBufferWindowMemory(k=conversational_memory_length,
-                                            memory_key="chat_history",
-                                            return_messages=True)
+    lines = raw_response.split("\n")
+    formatted_response = ""
 
-    # Now, gather all inputs before generating the response to give the user a final answer.
-    print(
-        "\nNow that we've gathered all the necessary information, I'll generate a personalized response with your itinerary and packing list..."
+    for line in lines:
+        if line.strip().startswith("*Day"):
+            formatted_response += f"### {line.strip()[1:].strip()} ###\n"
+        elif line.strip().startswith("-"):
+            formatted_response += f"- {line.strip()[1:].strip()}\n"
+        else:
+            formatted_response += f"{line.strip()}\n"
+
+    final_message = (
+        "\n\n### Excited? ###\n"
+        "Continue planning by checking out other women's reviews of safe and fun places around the city, "
+        "along with the itinerary page where you can check your saved itinerary. Have fun!"
     )
-
-    # Construct a chat prompt template using various components
-    prompt = ChatPromptTemplate.from_messages([
-        SystemMessage(
-            content=system_prompt),  # The system prompt sets the context.
-        MessagesPlaceholder(variable_name="chat_history"
-                            ),  # Placeholder for conversation history.
-        HumanMessagePromptTemplate.from_template(
-            "{human_input}"),  # Template for the user's input.
-    ])
-
-    # Create a conversation chain using the LangChain LLM (Language Learning Model)
-    conversation = LLMChain(
-        llm=groq_chat,  # The Groq LangChain chat object initialized earlier.
-        prompt=prompt,  # The constructed prompt template.
-        verbose=False,  # Set to True for debugging if needed.
-        memory=
-        memory,  # The conversational memory object that stores and manages conversation history.
-    )
-
-    # Generate and output the final response based on the user input
-    response = conversation.predict(
-        human_input="Generate my travel itinerary and packing list.")
-    print("Chatbot:", response)
+    formatted_response += final_message
+    return formatted_response
 
 if __name__ == "__main__":
-    main()
+    app.run(port=5000, debug=True)

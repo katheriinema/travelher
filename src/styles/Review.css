@@ -1,54 +1,127 @@
+/* General Review Content */
 .reviews-content {
   padding: 20px;
-  background-color: #FFEBF4;
-  color: #333;
+  text-align: center;
 }
 
-.reviews-list {
-  list-style: none;
-  padding: 0;
-}
-
-.place-item {
-  padding: 10px;
+.reviews-header {
+  font-size: 2rem;
+  font-family: "Righteous", serif;
+  color: #e75480;
   margin-bottom: 10px;
-  border: 1px solid #E75480;
-  border-radius: 8px;
-  cursor: pointer;
-  background-color: #fff;
 }
 
-.place-item:hover {
-  background-color: #fde2e2;
+.reviews-intro {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 30px;
 }
 
-.place-item.selected {
-  background-color: #f8d7da;
-}
-
-.reviews-section {
+/* Review Container */
+.review-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-top: 20px;
 }
 
-.review-input {
-  width: 100%;
-  height: 80px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+/* Review Card Styles */
+.review-card {
+  display: flex;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 0 20px;
+  padding: 20px;
+  width: 90%;
+  max-width: 600px;
 }
 
+/* City Image */
+.city-image {
+  width: 100%; /* Ensure the image scales to the card width */
+  max-width: 150px; /* Set a maximum width for the image */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 15px;
+  margin-right: 20px;
+  object-fit: cover; /* Ensures the image looks good within its container */
+}
+
+/* Place Details */
+.place-details {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.rating {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #e75480;
+  margin-bottom: 10px;
+}
+
+/* Reviews List */
+.reviews-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0 0 10px;
+}
+
+.reviews-list li {
+  margin: 5px 0;
+  font-style: italic;
+  color: #555;
+}
+
+/* Review Input */
+.review-input {
+  width: 100%;
+  height: 100px;
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Add Review Button */
 .add-review-button {
-  padding: 10px 15px;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #e75480;
   color: white;
-  background-color: #E75480;
   border: none;
-  border-radius: 8px;
+  border-radius: 5px;
   cursor: pointer;
+  transition: transform 0.2s, background-color 0.3s, box-shadow 0.2s;
 }
 
 .add-review-button:hover {
-  background-color: #DE5D83;
+  background-color: #de5d83;
+  transform: scale(1.05);
+}
+
+.add-review-button:active {
+  transform: scale(0.98);
+}
+
+/* Navigation Buttons */
+.nav-button {
+  background-color: #e75480;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.nav-button:hover {
+  background-color: #de5d83;
+  transform: scale(1.1);
+}
+
+.nav-button:active {
+  transform: scale(0.95);
 }

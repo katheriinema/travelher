@@ -1,50 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
-import axios from "axios";
 import "../styles/Itinerary.css";
+import ReactMarkdown from "react-markdown";
 
-const Itinerary = ({ userId }) => {
-  const [itinerary, setItinerary] = useState(null);
-  const [error, setError] = useState(null);
+const Itinerary = () => {
+  const [markdownItinerary, setMarkdownItinerary] = useState("");
 
+  // Load Markdown itinerary from localStorage
   useEffect(() => {
-    const fetchItinerary = async () => {
-      try {
-        const response = await axios.get(
-          `http://127.0.0.1:5000/api/itineraries/${userId}`
-        );
-        setItinerary(response.data);
-      } catch (err) {
-        console.error("Error fetching itinerary:", err);
-        setError("Failed to load itinerary. Please try again.");
-      }
-    };
-
-    fetchItinerary();
-  }, [userId]);
+    const storedMarkdown = localStorage.getItem("markdownItinerary");
+    if (storedMarkdown) {
+      setMarkdownItinerary(storedMarkdown);
+    }
+  }, []);
 
   return (
-    <Layout pageTitle="Your Itinerary">
-      <div className="itinerary-content">
-        {error ? (
-          <p className="error-message">{error}</p>
-        ) : itinerary ? (
-          <div className="itinerary-details">
-            <h2>Destination: {itinerary.destination}</h2>
-            <p>Duration: {itinerary.duration} days</p>
-            <h3>Activities:</h3>
-            <ul>
-              {itinerary.activities.map((activity, index) => (
-                <li key={index}>{activity}</li>
-              ))}
-            </ul>
-            <h3>Schedule:</h3>
-            <pre className="schedule">
-              {JSON.stringify(itinerary.schedule, null, 2)}
-            </pre>
+    <Layout pageTitle="Itinerary">
+      <div className="itinerary-page">
+        <h1 className="itinerary-header">Saved Itinerary</h1>
+        {markdownItinerary ? (
+          <div className="markdown-container">
+            <ReactMarkdown>{markdownItinerary}</ReactMarkdown>
           </div>
         ) : (
-          <p>Loading itinerary...</p>
+          <p>No itinerary saved yet. Plan your trip using the chatbot!</p>
         )}
       </div>
     </Layout>

@@ -1,6 +1,13 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../App.css";
+import { Link } from "react-router-dom";
+
+// Example in Layout.js
+<nav>
+  <Link to="/chatbot">Chatbot</Link>
+  <Link to="/itinerary">Itinerary</Link>
+</nav>
 
 const Layout = ({ children, pageTitle }) => {
   const navigate = useNavigate();
@@ -13,8 +20,8 @@ const Layout = ({ children, pageTitle }) => {
         <div className="profile-icon" onClick={() => navigate("/profile")}>
           <img src="/assets/pfp.png" alt="Profile" />
         </div>
-        <h1>{pageTitle}</h1>
-      </div>
+        <h1 style={{ color: "#f5a1b8" }}>{pageTitle}</h1> {/* Ensures consistent dusty pink */}
+        </div>
 
       {/* Main Content */}
       <div className="main-content">{children}</div>

@@ -1,29 +1,44 @@
-/* Itinerary Page Styling */
-.itinerary-content {
-    margin-top: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
-    background-color: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+.itinerary-page {
     padding: 20px;
-    text-align: center;
+    background-color: #FFEBF4;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
-  .itinerary-details h2,
-  .itinerary-details h3 {
-    color: #f5a1b8; /* Pastel pink for headings */
+  .itinerary-header {
+    color: #e75480;
+    font-size: 2rem;
+    margin-bottom: 20px;
   }
   
-  .itinerary-details p,
-  .itinerary-details ul {
-    color: #f5a1b8;
-    text-align: center;
+  .markdown-container {
+    width: 100%;
+    max-width: 800px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+    line-height: 1.6;
   }
   
-  .error-message {
-    color: red;
-    font-weight: bold;
-    margin: 20px;
+  .markdown-container h1,
+  .markdown-container h2,
+  .markdown-container h3 {
+    color: #e75480;
+  }
+  
+  .markdown-container p {
+    color: #333333;
+  }
+  
+  .markdown-container ul {
+    padding-left: 20px;
+  }
+  
+  .markdown-container li {
+    margin-bottom: 10px;
   }
   
