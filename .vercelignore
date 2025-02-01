@@ -1,0 +1,25 @@
+# Ignore version control files
+.git
+.gitignore
+
+# Ignore Node.js dependencies directory (for your React app)
+node_modules/
+
+# Ignore Python cache and compiled files
+__pycache__/
+*.pyc
+
+# Ignore test directories and files
+tests/
+coverage/
+
+# Ignore documentation and markdown files
+docs/
+*.md
+
+# Ignore log files
+*.log
+
+# Ignore local configuration files
+.vscode/
+.idea/
