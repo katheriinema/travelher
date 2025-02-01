@@ -18,6 +18,11 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
+# Home route
+@app.route('/')
+def home():
+    return "Welcome to TravelHER! Use the /chat endpoint for the chatbot."
+
 # Initialize LangChain with Groq
 groq_api_key = os.getenv("GROQ_API_KEY", "your-api-key")  # Replace or set as environment variable
 model = 'llama3-8b-8192'
