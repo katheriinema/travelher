@@ -20,8 +20,9 @@ const Chatbot = () => {
     setLoading(true);
   
     try {
-      const response = await axios.post("http://localhost:5000/chat", {
-        user_id: userId,
+      const apiUrl = process.env.REACT_APP_API_URL;
+      const response = await axios.post(`${apiUrl}/chat`, {
+          user_id: userId,
         user_input: userInput,
       });
   

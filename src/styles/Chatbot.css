@@ -33,7 +33,7 @@
 .chat-message.user {
   background-color: #f5a1b8;
   color: #fff;
-  align-selft: flex-end;
+  align-self: flex-end;
 }
 
 .chat-input {
