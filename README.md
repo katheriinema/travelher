@@ -1,5 +1,8 @@
 # **TravelHER: Empowering Women to Explore, Connect, and Thrive**
 
+Quick runthrough the pages: 
+![Run through pages](home.mp4)
+
 The AI Chatbot opening page 
 ![AI Chatbot page](ai-chatbot.png)
 
