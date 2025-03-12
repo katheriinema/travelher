@@ -1,5 +1,9 @@
 # **TravelHER: Empowering Women to Explore, Connect, and Thrive**
 
+![AI Chatbot page](ai-chatbot.png)
+![Itinerary page](itinerary.png)
+![Reviews page](reviews.png)
+
 ## **Inspiration 💡**
 TravelHER was born from the idea of creating a platform that empowers women to explore the world with confidence. We wanted to address the unique challenges women face while traveling, like safety concerns and finding trustworthy recommendations, by building a community-driven platform tailored specifically to their needs.
 
