@@ -1,7 +1,12 @@
 # **TravelHER: Empowering Women to Explore, Connect, and Thrive**
 
+The AI Chatbot opening page 
 ![AI Chatbot page](ai-chatbot.png)
+
+The itinerary that is saved from your conversation with your chatbot
 ![Itinerary page](itinerary.png)
+
+The reviews page generated from your conversation with your chatbot
 ![Reviews page](reviews.png)
 
 ## **Inspiration 💡**
